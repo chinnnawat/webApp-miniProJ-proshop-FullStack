@@ -33,7 +33,6 @@ const router = createBrowserRouter(
       {/* Private Route */}
       <Route path='' element={<PrivateRoute/>}>
         <Route path='/shipping' element={<ShippingScreen/>}></Route>
-        {/* <Route path='/payment' element={<ShippingScreen/>}></Route> */}
       </Route>
     </Route>
   )
