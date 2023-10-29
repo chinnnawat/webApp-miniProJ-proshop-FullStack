@@ -1,0 +1,23 @@
+import express from 'express'
+import { getProducts, getProductsById } from '../controllers/productController.js';
+import {
+    addOrderItems,
+    getMyOrders,
+    getOrderByID,
+    updateOrderToPaid,
+    updateOrderToDelivered,
+    getOrders
+} from "../controllers/orderController.js"
+import { protect,admin } from '../middleware/authMiddleware.js';
+
+const router = express.Router();
+
+//  (baseURL/orders/) = (/) => baseURL = http://localhost:5000/api
+router.route('/').post(protect,addOrderItems).get(protect, admin, getOrders)
+router.route('/mine').get(protect,getMyOrders);
+router.route('/:id').get(protect, admin, getOrderByID);
+router.route('/:id/pay').put(protect, updateOrderToPaid);
+router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered);
+
+
+export default router
