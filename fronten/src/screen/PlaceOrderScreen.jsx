@@ -1,13 +1,13 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { Link,useNavigate } from 'react-router-dom'
+import React from 'react';
+import { useEffect } from 'react';
+import { Link,useNavigate } from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux';
-import { Button,Row,Col,ListGroup,Image,Card, ListGroupItem } from 'react-bootstrap';
+import { Button,Row,Col,ListGroup,Image,Card } from 'react-bootstrap';
 import CheckoutSteps from '../component/CheckoutSteps';
-import {toast} from 'react-toastify'
+import {toast} from 'react-toastify';
 import Message from '../component/Message';
 import Loader from '../component/Loader';
-import {useCreateOrderMutation} from '../slices/orderApiSlice'
+import {useCreateOrderMutation} from '../slices/orderApiSlice';
 import { clearCartItems } from '../slices/cartSlice';
 
 const PlaceOrderScreen = () => {
