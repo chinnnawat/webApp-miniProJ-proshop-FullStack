@@ -39,7 +39,7 @@ import { LinkContainer } from 'react-router-bootstrap'
                 {/* Place Order */}
                 <Nav.Item>
                     { step4 ? (
-                        <LinkContainer to='/placorder'>
+                        <LinkContainer to='/placeorder'>
                             <Nav.Link>Place Order</Nav.Link>
                         </LinkContainer>
                     ) : (
