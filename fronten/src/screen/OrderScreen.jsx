@@ -4,6 +4,7 @@ import Message from '../component/Message'
 import Loader from '../component/Loader'
 import {useGetOrderDetailsQuery, useGetPayPalClientIdQuery, usePayOrderMutation} from '../slices/orderApiSlice'
 import {PayPalButtons, usePayPalScriptReducer} from '@paypal/react-paypal-js'
+import 'react-toastify/dist/ReactToastify.css';
 import {toast} from 'react-toastify'
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -41,6 +42,39 @@ const OrderScreen = () => {
             }
         }
     },[order,paypal,paypalDispatch,loadingPayPal,errorPaypal])
+
+    function onApproveTest(data, actions){
+        return actions.order.capture().then(async function (details) {
+            try {
+                await payOrder({orderId, details});
+                refetch();
+                toast.success('Payment successful');
+            } catch (err) {
+                toast.error(err?.data?.message || err.message)
+            }
+        })
+    }
+    async function onApprove(){
+        await payOrder({orderId, details : {payer:{}}});
+        refetch();
+        toast.success('Payment successful');
+    }
+    function onError(err){
+        toast.error(err.message)
+    }
+    function createOrder(data,actions){
+        return actions.order.create({
+            purchase_units:[
+                {
+                    amount:{
+                        value: order.totalPrice
+                    }
+                }
+            ]
+        }).then((orderId)=>{
+            return orderId
+        })
+    }
 
     return isLoading? <Loader/> : error ? <Message variant='danger'/> :(
         <>
@@ -133,7 +167,26 @@ const OrderScreen = () => {
                                 </Row>
                             </ListGroup.Item>
                             {/* PAY ORDER PLACEHOLDER */}
+                            {!order.isPaid && (
+                                <ListGroup.Item>
+                                    {loadingPay && <Loader/>}
+                                    {isPending ? <Loader/> : (
+                                        <div>
+                                            <Button onClick={onApproveTest} style={{marginBottom:'10px'}}>Test Pay Order</Button>
+                                            <div>
+                                                <PayPalButtons
+                                                    createOrder={createOrder}
+                                                    onApprove={onApprove}
+                                                    onError={onError}
+                                                    >
+                                                </PayPalButtons>
+                                            </div>
+                                        </div>
+                                    )}
+                                </ListGroup.Item>
+                            )}
                             {/* MARK AS DELIVERED PLACEHOLDER */}
+                            
                         </ListGroup>
                     </Card>
                 </Col>
