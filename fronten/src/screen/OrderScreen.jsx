@@ -9,9 +9,10 @@ import {useGetOrderDetailsQuery,
 } from '../slices/orderApiSlice'
 import {PayPalButtons, usePayPalScriptReducer} from '@paypal/react-paypal-js'
 import 'react-toastify/dist/ReactToastify.css';
-import {toast} from 'react-toastify'
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const OrderScreen = () => {
     const { id: orderId } = useParams();
@@ -54,7 +55,10 @@ const OrderScreen = () => {
             try {
                 await payOrder({orderId, details});
                 refetch();
-                toast.success('Payment successful');
+                toast.success('Payment Success', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 3000,
+                });
             } catch (err) {
                 toast.error(err?.data?.message || err.message)
             }
@@ -63,7 +67,10 @@ const OrderScreen = () => {
     async function onApprove(){
         await payOrder({orderId, details : {payer:{}}});
         refetch();
-        toast.success('Payment successful');
+        toast.success('Operation successful!', {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+        });
     }
     function onError(err){
         toast.error(err.message)
@@ -86,7 +93,10 @@ const OrderScreen = () => {
         try {
             await deliverOrder(orderId);
             refetch();
-            toast.success('Order delivered');
+            toast.success('Operation successful!', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000,
+            });
         } catch (err) {
             toast.error(err?.data?.message || err.message)
         }
@@ -195,6 +205,7 @@ const OrderScreen = () => {
                                                     onApprove={onApprove}
                                                     onError={onError}
                                                     >
+                                                        <ToastContainer />
                                                 </PayPalButtons>
                                             </div>
                                         </div>
@@ -207,6 +218,7 @@ const OrderScreen = () => {
                                     <ListGroup.Item>
                                         <Button type='button' className='btn btn-block' onClick={deliverOrderHandler}>
                                             Mark As Delivered
+                                            <ToastContainer />
                                         </Button>
                                     </ListGroup.Item>
                                 )}

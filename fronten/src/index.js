@@ -7,6 +7,8 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom'
+
+import 'react-toastify/dist/ReactToastify.css';
 import './assets/styles/bootstraps.custom.css';
 import './assets/styles/index.css';
 import App from './App';
