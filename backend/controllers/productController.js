@@ -40,10 +40,11 @@ const createProduct = asyncHandler(async (req, res) => {
         countInStock: 0,
         numReviews: 0,
         description: 'Sample description',
-        });
-    
-        const createdProduct = await product.save();
-        res.status(201).json(createdProduct);
+        rating: 0, // เพิ่ม rating ที่นี่หรือให้ค่าตามที่ต้องการ
     });
 
-export { getProducts, getProductsById, createProduct }
+    const createdProduct = await product.save();
+    res.status(201).json(createdProduct);
+});
+
+export { getProducts, getProductsById, createProduct };
