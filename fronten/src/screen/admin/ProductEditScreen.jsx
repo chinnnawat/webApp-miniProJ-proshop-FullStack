@@ -63,7 +63,10 @@ const ProductEditScreen = () => {
             toast.error(result.error)
         }
         else{
-            toast.success('Product Updated')
+            toast.success('Product Updated', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000,
+            })
             navigate('/admin/productlist')
         }
     }
@@ -140,11 +143,14 @@ const ProductEditScreen = () => {
                                 onChange={(e)=>setDescription(e.target.value)}></Form.Control>
                         </Form.Group>
 
-                        <Button type='submit' variant='primary' className='my-2'>Update</Button>
+                        <Button type='submit' variant='primary' className='my-2'>
+                            Update
+                        </Button>
 
                     </Form>
                 )}
             </FormContainer>
+            
         </>
     )
 }
