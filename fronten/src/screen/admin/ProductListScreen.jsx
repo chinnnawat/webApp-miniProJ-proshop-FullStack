@@ -4,7 +4,11 @@ import { Table,Button, Row, Col } from 'react-bootstrap';
 import { FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
 import Message from '../../component/Message'
 import Loader from '../../component/Loader';
-import { useGetProductsQuery, useCreateProductMutation } from '../../slices/productApiSlice'
+import { 
+    useGetProductsQuery, 
+    useCreateProductMutation,
+    useDeleteProductMutation,
+} from '../../slices/productApiSlice'
 import {toast, ToastContainer} from 'react-toastify'
 
 const ProductListScreen = () => {
@@ -13,14 +17,31 @@ const ProductListScreen = () => {
 
     const [createProduct, { isLoading: loadingCreate }] = useCreateProductMutation();
 
-    const deleteHandler = (id) => {
-        console.log('delete', id)
+    const deleteHandler = async (id) => {
+        if(window.confirm("Are you sure ?")){
+            try {
+                await deleteProduct(id);
+                toast.success('Product Deleted', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                })
+                refetch();
+            } catch (err) {
+                toast.error( err?.data?.message || err.error );
+            }
+        }
     }
+
+    const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
 
     const createProductHandler = async () => {
         if (window.confirm('Are you sure you want to create a new product ?')){
             try {
                 await createProduct();
+                toast.success('Product Created', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                })
                 refetch();
             } catch (err) {
                 toast.error(err?.data?.message || err.error);
@@ -37,10 +58,12 @@ const ProductListScreen = () => {
             <Col className='text-end'>
                 <Button className='btn-sm m-3' onClick={createProductHandler} >
                     <FaEdit/> Create Product
+                    <ToastContainer/>
                 </Button>
             </Col>
         </Row>
         {loadingCreate && <Loader/>}
+        {loadingDelete && <Loader/>}
         {isLoading ? <Loader/> : 
         error ? 
         <Message>
@@ -75,6 +98,7 @@ const ProductListScreen = () => {
                                     </LinkContainer>
                                     <Button variant='danger' className='btn-sm' onClick={ () => deleteHandler(product._id) }>
                                         <FaTrash style={{color : 'white'}}/>
+                                        <ToastContainer/>
                                     </Button>
                                 </td>
                             </tr>
