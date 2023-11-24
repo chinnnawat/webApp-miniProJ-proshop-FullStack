@@ -31,6 +31,8 @@ import ProFileScreen from './screen/ProFileScreen';
 import OrderListScreen from './screen/admin/OrderListScreen';
 import ProductListScreen from './screen/admin/ProductListScreen';
 import ProductEditScreen from './screen/admin/ProductEditScreen';
+import UserListScreen from './screen/admin/UserListScreen';
+import UserEditScreen from './screen/admin/UserEditScreen';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -55,6 +57,8 @@ const router = createBrowserRouter(
         <Route path='/admin/orderlist' element={<OrderListScreen/>}></Route>
         <Route path='/admin/productlist' element={<ProductListScreen/>}></Route>
         <Route path='/admin/product/:id/edit' element={<ProductEditScreen/>}></Route>
+        <Route path='/admin/userlist' element={<UserListScreen/>}></Route>
+        <Route path='/admin/user/:id/edit' element={<UserEditScreen/>}></Route>
       </Route>
     </Route>
   )
