@@ -5,13 +5,13 @@ import { Form,Button } from 'react-bootstrap';
 import Message from '../../component/Message';
 import Loader from '../../component/Loader';
 import FormContainer from '../../component/Formcontainer';
-import { ToastContainer,toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { 
     useUpdateProductMutation,
     useGetProductDetailsQuery,
     useUploadProductImageMutation
 } from '../../slices/productApiSlice';
-import { set } from 'mongoose';
+
 
 const ProductEditScreen = () => {
     const  {id: productId} = useParams();
@@ -27,7 +27,6 @@ const ProductEditScreen = () => {
     const {
         data: product,
         isLoading,
-        refetch,
         error,
     }= useGetProductDetailsQuery(productId)
 
@@ -135,6 +134,7 @@ const ProductEditScreen = () => {
                                 onChange={uploadFileHandler}
                             ></Form.Control>
                         </Form.Group>
+                        {loadingUpload && <Loader/>}
 
                         {/* Brand */}
                         <Form.Group controlId='brand'className='my-2'>

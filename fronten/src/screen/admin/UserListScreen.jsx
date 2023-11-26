@@ -5,7 +5,7 @@ import { FaTimes, FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 import Message from '../../component/Message'
 import Loader from '../../component/Loader';
 import {useGetUsersQuery,useDeleteUserMutation} from '../../slices/userApiSlice'
-import {toast, ToastContainer} from 'react-toastify'
+import {toast} from 'react-toastify'
 
 const UserListScreen = () => {
     const { data: orders, isLoading, error, refetch } = useGetUsersQuery();

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Paginate from "../component/Paginate";
 import { Link } from "react-router-dom";
 import ProductCarousel from "../component/ProductCarousel";
+import Meta from "../component/Meta";
 
 const HomeScreen =()=>{
     const {pageNumber, keyword} = useParams();
@@ -21,20 +22,22 @@ const HomeScreen =()=>{
                 )}
             {isLoading ? (
                 <Loader/>
-            ) : error ? (<Message variant='danger'>{error?.data?.message || error.error}</Message>) : (<>
-            <h1>Latest Product</h1>
-            <Row>
-                {data.products.map((product)=>(
-                    <Col key={product._id} sm={12} md={6} lg={4} xl={3} >
-                        <Product product={product} />
-                    </Col>
-                ))}
-            </Row>
-            <Paginate 
-            pages={data.pages} 
-            page={data.page}
-            keyword={keyword ? keyword : ''}
-            />
+            ) : error ? (<Message variant='danger'>{error?.data?.message || error.error}</Message>) : (
+            <>
+            <Meta title='Welcome to Proshop'/>
+                <h1>Latest Product</h1>
+                <Row>
+                    {data.products.map((product)=>(
+                        <Col key={product._id} sm={12} md={6} lg={4} xl={3} >
+                            <Product product={product} />
+                        </Col>
+                    ))}
+                </Row>
+                <Paginate 
+                pages={data.pages} 
+                page={data.page}
+                keyword={keyword ? keyword : ''}
+                />
             </>)}
                 
         </>

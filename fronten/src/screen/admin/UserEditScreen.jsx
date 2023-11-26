@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
-import { Link,useNavigate,useParams } from 'react-router-dom';
+import { Link,useParams } from 'react-router-dom';
 import { Form,Button } from 'react-bootstrap';
 import Message from '../../component/Message';
 import Loader from '../../component/Loader';
@@ -11,7 +11,6 @@ import {
     useGetUserDetailsQuery,
 
 } from '../../slices/userApiSlice';
-import { set } from 'mongoose';
 
 const UserEditScreen = () => {
     const  {id: userId} = useParams();
@@ -29,7 +28,7 @@ const UserEditScreen = () => {
 
     const [updateUser,{ isLoading: loadingUpdate }] = useUpdateUserMutation();
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         if(user){
